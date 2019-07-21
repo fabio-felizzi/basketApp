@@ -1,0 +1,16 @@
+MOO Frontend Coding Exercise
+
+We've supplied a skeleton React application that's intended to implement a basic shopping
+basket experience. A list of products is displayed on the page, along with a button to add
+the product to the basket. The functionality to add the product to the basket has not yet been
+implemented.
+
+We'd like you to implement the functionality needed so that when the add button for a product is
+clicked:
+
+(1) The product is added to the customer's basket
+(2) The contents of the basket is displayed on the page
+
+We've supplied a fully functional REST API for you to develop against, described in the README.
+
+Good luck, and if you have any questions, don't hestitate to reach out to us!
