@@ -1,6 +1,3 @@
-# Frontend Coding test
-Shopping cart component that allows a user to manage their basket
-
 ## Getting started
 
 The app is dockerised, run `docker-compose up --build` to bring up the application. This will spin up the backend api and start the front end application on http://localhost:3000. It uses webpack devserver and supports hot reloading to make development as easy as possible.
