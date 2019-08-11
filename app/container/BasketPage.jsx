@@ -18,16 +18,63 @@ export class BasketPage extends Component {
     }
 
     addToBasket = product => {
+        const { updateBasket, basket: { id } } = this.props;
+
         this.setState(prevState => ({
             items: prevState.items.concat(product),
         }), () => {
-             this.props.updateBasket(this.state.items);
+            console.log('ADD TO BASKET ITEMS IN STATE', this.state.items);
+            updateBasket(this.state.items, id);
         });
-  }
+    }
+
+    increaseQuantity = itemId => {
+        const { incQuantity, basket: { id } } = this.props;
+        // const { items } = this.state;
+        // const matchedItemsInState = items.filter(item => item.id === itemID);
+        // console.log(matchedItemsInState);
+        // console.log(this.props.basket.items);
+        
+        // const matchedItemsInBasket = Object.entries(this.props.basket.items[matchedItemsInState[0].id]).filter(item => item.itemId === itemID);
+        // console.log(matchedItemsInBasket);
+        
+        // const newTotal = matchedItemsInState[0].amount = matchedItemsInBasket[0].amount;
+
+        incQuantity(id, itemId);
+        this.setState({ items });
+    }
+
+    decreaseQuantity = itemId => {
+        const { decQuantity, basket: { id } } = this.props;
+        const { items } = this.state;
+        const matchedItems = items.filter(item => item.id === itemId);
+
+        // this.setState(() => {
+        //     const decAmount = matchedItems[0].amount = matchedItems.length;
+            
+        //     return decAmount;
+        // }, () => {
+        //     decQuantity(id, itemId);
+        // });
+    }
+
+    deleteItem = itemId => {
+
+    }
+
+    emptyBasket = () => {
+        const { clearBasket, basket: { id } } = this.props;
+
+        this.setState({
+            items: [],
+        },
+        () => {
+            clearBasket(id);
+        });
+    }
 
     render() {
         const { isLoading, products } = this.props;
-        
         const { items } = this.state;
 
         if (isLoading) {
@@ -41,10 +88,19 @@ export class BasketPage extends Component {
                 </header>
                 <main className="row">
                     <section className="col">
-                        <ProductList products={products} addToBasket={this.addToBasket} />
+                        <ProductList
+                            products={products}
+                            addToBasket={this.addToBasket}
+                        />
                     </section>
                     <section className="col">
-                        <Basket items={items} />
+                        <Basket
+                            items={items}
+                            increaseQuantity={this.increaseQuantity}
+                            decreaseQuantity={this.decreaseQuantity}
+                            emptyBasket={this.emptyBasket}
+                            deleteItem={this.deleteItem}
+                        />
                     </section>
                 </main>
             </div>
