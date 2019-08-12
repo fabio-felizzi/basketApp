@@ -30,32 +30,44 @@ export class BasketPage extends Component {
 
     increaseQuantity = itemId => {
         const { incQuantity, basket: { id } } = this.props;
-        // const { items } = this.state;
-        // const matchedItemsInState = items.filter(item => item.id === itemID);
-        // console.log(matchedItemsInState);
-        // console.log(this.props.basket.items);
+        const { items } = this.state;
+        const updatedItems = items.map(item => {
+            if (item.id === itemId && item.quantity === undefined) {
+                item.quantity = 1;
+                return item;
+            } else {
+                item.quantity = item.quantity + 1;
+                return item;
+            }
+        });
+
+        console.log(updatedItems);
         
-        // const matchedItemsInBasket = Object.entries(this.props.basket.items[matchedItemsInState[0].id]).filter(item => item.itemId === itemID);
-        // console.log(matchedItemsInBasket);
-        
-        // const newTotal = matchedItemsInState[0].amount = matchedItemsInBasket[0].amount;
 
         incQuantity(id, itemId);
-        this.setState({ items });
+        this.setState({ items: updatedItems });
     }
 
     decreaseQuantity = itemId => {
         const { decQuantity, basket: { id } } = this.props;
         const { items } = this.state;
-        const matchedItems = items.filter(item => item.id === itemId);
+        let updatedItems = [];
+        if (items.length > 0) {
+            updatedItems = items.map(item => {
+                if (item.id === itemId && item.quantity === 1) {
+                    const removeIndex = items.map(item => item.id).indexOf(itemId);
+                    items.splice(removeIndex, 1);
+                } else {
+                    item.quantity = item.quantity - 1;
+                    return item;
+                }
+            });
+        }
 
-        // this.setState(() => {
-        //     const decAmount = matchedItems[0].amount = matchedItems.length;
-            
-        //     return decAmount;
-        // }, () => {
-        //     decQuantity(id, itemId);
-        // });
+        console.log(updatedItems);
+        
+        decQuantity(id, itemId);
+        this.setState({ items: updatedItems });
     }
 
     deleteItem = itemId => {

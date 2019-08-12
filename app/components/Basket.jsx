@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 const UUIDGenerator = () => {
     const uuid = () => {
@@ -13,18 +13,23 @@ const Basket = ({ items, increaseQuantity, decreaseQuantity, deleteItem, emptyBa
     <div className="mr-4">
         <h2>Basket</h2>
         <ul className="list-group">
-            {
-                items.map(item => {
-                    return (
-                        <li className="list-group-item d-flex justify-content-between" key={UUIDGenerator()}>
-                            <span>{item.name}</span>
-                            <button onClick={() => increaseQuantity(item.id)}>+</button>
-                            <button onClick={() => decreaseQuantity(item.id)}>-</button>
-                            <button onClick={() => deleteItem(item.id)}>Delete</button>
-                        </li>
-                    )
-                }) 
-            }
+            {items.length > 0 ? (
+                <Fragment>
+                    {
+                        items.map(item => {
+                            return (
+                                <li className="list-group-item d-flex justify-content-between" key={UUIDGenerator()}>
+                                    <span>{item.name}</span>
+                                    <span>{item.quantity}</span>
+                                    <button onClick={() => increaseQuantity(item.id)}>+</button>
+                                    <button onClick={() => decreaseQuantity(item.id)}>-</button>
+                                    <button onClick={() => deleteItem(item.id)}>Delete</button>
+                                </li>
+                            )
+                        }) 
+                    }
+                </Fragment>
+            ) : null}
         </ul>
         <button onClick={() => emptyBasket()}>Empty Basket</button>
     </div>
